@@ -23,8 +23,7 @@
 
 <br/>
 
-## 🎬 Live Demo
-
+## 🎬 Live Demo 
 The live demo runs locally at `http://localhost:5000` after starting the backend server with MongoDB.
 
 **To see the demo:**
