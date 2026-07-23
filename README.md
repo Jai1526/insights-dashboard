@@ -17,9 +17,23 @@
 
 <br/>
 
-## 🔗 Live Demo
+## 🔗 GitHub Repository
 
-> **[Live Demo →](#)** *(paste your deployed link here)*
+> **https://github.com/Jai1526/insights-dashboard**
+
+<br/>
+
+## 🎬 Live Demo
+
+The live demo runs locally at `http://localhost:5000` after starting the backend server with MongoDB.
+
+**To see the demo:**
+1. Clone the repository
+2. Run `npm install && npm run dev`
+3. Open `http://localhost:5000`
+4. Login with demo credentials: `demo@insights.io` / `demo12345`
+
+The dashboard features real-time WebSocket updates — new traffic events appear every 2-8 seconds with live activity feed updates and toast notifications.
 
 <br/>
 
@@ -106,10 +120,12 @@ Insights Dashboard is a full-stack analytics platform combining a **Node.js/Expr
 
 **Prerequisites:** Node.js 18+, MongoDB
 
+### Local Development
+
 ```bash
 # 1. Clone the repo
-git clone https://github.com/your-username/insights-dashboard.git
-cd insights-dashboard/backend
+git clone https://github.com/Jai1526/insights-dashboard.git
+cd insights-dashboard
 
 # 2. Install dependencies
 npm install
@@ -120,7 +136,23 @@ cp .env.example .env
 
 # 4. Start the server
 npm run dev
+
+# 5. Open in browser
+# http://localhost:5000
 ```
+
+### Deploy to Production
+
+To make the dashboard accessible online with full real-time features:
+
+1. Deploy the backend to a Node.js hosting service (Render, Railway, Fly.io, etc.)
+2. Set environment variables (MONGO_URI, JWT_SECRET, etc.)
+3. Update `ALLOWED_ORIGINS` in `.env` to include your deployed domain
+4. The dashboard will be served at your deployed URL
+
+**Note:** The real-time socket connection and live traffic generation require the backend server to be running. Static hosting alone (GitHub Pages, Netlify) will only show the UI shell without live data.
+
+<br/>
 
 <br/>
 
