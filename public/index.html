@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Live analytics dashboard with real-time reporting, search, and responsive interactions." />
+  <title>Insights Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/dashboard.css?v=2" />
+</head>
+<body>
+  <!-- ========== AUTH PAGES ========== -->
+  <div class="auth-bg" id="authBg">
+    <div class="auth-bg-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+    </div>
+    <div class="auth-grid-lines"></div>
+  </div>
+
+  <div class="auth-page" id="loginPage">
+    <div class="auth-card">
+      <button type="button" class="auth-theme-toggle" id="authThemeToggle" aria-label="Toggle theme">
+        <span class="theme-toggle-icon">🌙</span>
+      </button>
+
+      <div class="auth-card-glow"></div>
+
+      <div class="auth-header">
+        <div class="brand">
+          <div class="brand-mark">✦</div>
+          <span class="brand-text">Insights</span>
+        </div>
+        <div class="auth-welcome">
+          <h1>Welcome back</h1>
+          <p class="auth-subtitle">Sign in to your dashboard</p>
+        </div>
+      </div>
+
+      <form id="loginForm" class="auth-form" novalidate>
+        <div class="input-group">
+          <div class="floating-input-wrap">
+            <input name="email" type="email" placeholder=" " required autocomplete="email" class="floating-input" id="loginEmail" />
+            <label for="loginEmail" class="floating-label">Email address</label>
+            <div class="input-highlight"></div>
+            <div class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="floating-input-wrap">
+            <input name="password" type="password" placeholder=" " required minlength="8" autocomplete="current-password" class="floating-input" id="loginPassword" />
+            <label for="loginPassword" class="floating-label">Password</label>
+            <div class="input-highlight"></div>
+            <div class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 1 10 0v4"/></svg>
+            </div>
+            <button type="button" class="password-toggle" id="loginPasswordToggle" aria-label="Toggle password visibility" tabindex="-1">
+              <svg class="eye-icon" width="18" height="18" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg class="eye-off-icon" width="18" height="18" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 1-2.16 3.19m-6.72-1.07a3 3 0 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="auth-options">
+          <label class="checkbox-row">
+            <input type="checkbox" id="rememberMe" checked />
+            <span class="checkbox-check"></span>
+            <span class="checkbox-label">Remember me</span>
+          </label>
+          <a href="#" class="forgot-link" id="forgotPasswordLink">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="auth-btn-primary" id="loginSubmitBtn">
+          <span class="btn-text">Sign in</span>
+          <span class="btn-spinner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10" stroke-dasharray="31.4 31.4" stroke-linecap="round"/></svg>
+          </span>
+        </button>
+
+        <div class="auth-divider">
+          <span>or continue with</span>
+        </div>
+
+        <div class="social-btns">
+          <button type="button" class="social-btn" data-provider="google">
+            <svg width="20" height="20" viewBox="0 0 24"><path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            <span>Google</span>
+          </button>
+          <button type="button" class="social-btn" data-provider="github">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 24 12c0-6.63-5.37-12-12z"/></svg>
+            <span>GitHub</span>
+          </button>
+        </div>
+
+        <div class="demo-hint">
+          <span class="demo-hint-icon">✨</span>
+          <span>Demo: <strong>demo@insights.io</strong> / <strong>demo12345</strong></span>
+        </div>
+
+        <p class="auth-switch">Don't have an account? <a href="#" id="showRegister">Create one</a></p>
+      </form>
+
+      <div id="loginError" class="auth-error" style="display:none">
+        <div class="auth-error-icon">⚠</div>
+        <span class="auth-error-text"></span>
+      </div>
+      <div id="loginSuccess" class="auth-success" style="display:none">
+        <div class="auth-success-icon">✓</div>
+        <span class="auth-success-text"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-page" id="registerPage" style="display:none">
+    <div class="auth-card">
+      <div class="auth-card-glow"></div>
+      <div class="auth-header">
+        <div class="brand">
+          <div class="brand-mark">✦</div>
+          <span class="brand-text">Insights</span>
+        </div>
+        <div class="auth-welcome">
+          <h1>Create account</h1>
+          <p class="auth-subtitle">Start your free dashboard</p>
+        </div>
+      </div>
+      <form id="registerForm" class="auth-form" novalidate>
+        <div class="input-group">
+          <div class="floating-input-wrap">
+            <input name="name" placeholder=" " required autocomplete="name" class="floating-input" id="registerName" />
+            <label for="registerName" class="floating-label">Full name</label>
+            <div class="input-highlight"></div>
+            <div class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0-4-4H8a4 4 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="input-group">
+          <div class="floating-input-wrap">
+            <input name="email" type="email" placeholder=" " required autocomplete="email" class="floating-input" id="registerEmail" />
+            <label for="registerEmail" class="floating-label">Email address</label>
+            <div class="input-highlight"></div>
+            <div class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="input-group">
+          <div class="floating-input-wrap">
+            <input name="password" type="password" placeholder=" " required minlength="8" autocomplete="new-password" class="floating-input" id="registerPassword" />
+            <label for="registerPassword" class="floating-label">Password</label>
+            <div class="input-highlight"></div>
+            <div class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 1 10 0v4"/></svg>
+            </div>
+            <button type="button" class="password-toggle" id="registerPasswordToggle" aria-label="Toggle password visibility" tabindex="-1">
+              <svg class="eye-icon" width="18" height="18" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg class="eye-off-icon" width="18" height="18" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 1-2.16 3.19m-6.72-1.07a3 3 0 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </button>
+          </div>
+        </div>
+        <button type="submit" class="auth-btn-primary" id="registerSubmitBtn">
+          <span class="btn-text">Create account</span>
+          <span class="btn-spinner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10" stroke-dasharray="31.4 31.4" stroke-linecap="round"/></svg>
+          </span>
+        </button>
+        <p class="auth-switch">Already have an account? <a href="#" id="showLogin">Sign in</a></p>
+      </form>
+      <div id="registerError" class="auth-error" style="display:none">
+        <div class="auth-error-icon">⚠</div>
+        <span class="auth-error-text"></span>
+      </div>
+      <div id="registerSuccess" class="auth-success" style="display:none">
+        <div class="auth-success-icon">✓</div>
+        <span class="auth-success-text"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-shell" id="dashboardShell" style="display:none">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <div class="brand">
+          <div class="brand-mark">✦</div>
+          <span class="brand-text">Insights</span>
+        </div>
+        <button type="button" class="collapse-btn" id="collapseBtn" aria-label="Collapse sidebar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+
+      <nav class="nav-list" aria-label="Primary">
+        <a href="#" class="nav-item active" data-view="overview"><span class="nav-icon">📊</span><span class="nav-label">Overview</span></a>
+        <a href="#" class="nav-item" data-view="analytics"><span class="nav-icon">📈</span><span class="nav-label">Analytics</span></a>
+        <a href="#" class="nav-item" data-view="audience"><span class="nav-icon">👥</span><span class="nav-label">Audience</span></a>
+        <a href="#" class="nav-item" data-view="revenue"><span class="nav-icon">💳</span><span class="nav-label">Revenue</span></a>
+        <a href="#" class="nav-item" data-view="reports"><span class="nav-icon">🗂️</span><span class="nav-label">Reports</span></a>
+        <a href="#" class="nav-item" data-view="profile"><span class="nav-icon">👤</span><span class="nav-label">Profile</span></a>
+        <a href="#" class="nav-item" id="navLogout" style="display:none"><span class="nav-icon">🚪</span><span class="nav-label">Logout</span></a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="upgrade-card">
+          <p class="upgrade-title">Go Pro</p>
+          <p class="upgrade-desc">Unlock advanced reports and unlimited exports.</p>
+          <button type="button" class="upgrade-btn" id="sidebarUpgradeBtn">Upgrade</button>
+        </div>
+        <div class="profile-mini">
+          <img src="https://i.pravatar.cc/64?img=12" alt="avatar" class="avatar" />
+          <div class="profile-text">
+            <span class="profile-name">Ariana Cole</span>
+            <span class="profile-role">Product Lead</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="main-area">
+      <header class="topbar glass">
+        <button type="button" class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+
+        <label class="search-wrap" for="globalSearch">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" />
+            <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+          <input id="globalSearch" type="search" placeholder="Search activity, accounts, regions..." class="search-input" />
+        </label>
+
+        <div class="topbar-actions">
+          <div class="live-pill" id="liveStatus" aria-live="polite">
+            <span class="live-dot"></span>
+            <span id="liveText">Live • syncing</span>
+          </div>
+          <button type="button" class="icon-btn" id="refreshBtn" aria-label="Refresh dashboard" title="Refresh dashboard">
+            ↻
+          </button>
+          <div class="dropdown">
+            <button type="button" class="icon-btn" id="notificationsBtn" aria-label="Notifications">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+              <span class="badge-dot"></span>
+            </button>
+            <div class="dropdown-panel" id="notificationsPanel" role="menu"></div>
+          </div>
+
+          <label class="theme-toggle" for="themeSwitch" aria-label="Toggle dark mode">
+            <input type="checkbox" id="themeSwitch" />
+            <span class="toggle-track">
+              <span class="toggle-icon sun">☀️</span>
+              <span class="toggle-icon moon">🌙</span>
+              <span class="toggle-thumb"></span>
+            </span>
+          </label>
+
+          <div class="dropdown">
+            <button type="button" class="avatar-btn" id="profileBtn" aria-label="Open profile menu">
+              <img src="https://i.pravatar.cc/64?img=12" alt="avatar" class="avatar header-avatar" />
+            </button>
+            <div class="dropdown-panel profile-panel" id="profilePanel" role="menu">
+              <div class="profile-panel-header">
+                <strong>Signed in as Ariana</strong>
+                <span>Enterprise workspace</span>
+              </div>
+              <button type="button" class="dropdown-action" id="profileViewAccountBtn">View account</button>
+              <button type="button" class="dropdown-action" id="profilePreferencesBtn">Preferences</button>
+              <button type="button" class="dropdown-action" id="profileSignOutBtn">Sign out</button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <section class="hero glass">
+          <div>
+            <p class="eyebrow" id="heroEyebrow">Live performance pulse</p>
+            <h1 id="heroTitle">Turn raw traffic into confident decisions.</h1>
+            <p class="hero-copy" id="heroCopy">Monitor revenue, retention signals, and campaign momentum in one polished workspace.</p>
+          </div>
+            <button type="button" class="primary-btn" id="quickAddEventBtn">+ Quick-add Event</button>
+        </section>
+
+        <section class="workspace-toolbar glass">
+          <div class="workspace-pill">
+            <span class="dot"></span>
+            <span id="workspaceViewLabel">Overview workspace</span>
+          </div>
+          <div class="workspace-summary" id="workspaceSummary">Live sync enabled · 6 active panels</div>
+        </section>
+
+        <section class="view-section active" id="overviewView">
+          <section class="stat-grid" aria-label="Summary metrics">
+            <div class="glass stat-card">
+              <div class="stat-top">
+                <span class="stat-label">Total Revenue</span>
+                <span class="stat-icon revenue">💰</span>
+              </div>
+              <p class="stat-value" id="totalRevenueValue">--</p>
+              <p class="stat-change up" id="revenueChange">Loading…</p>
+            </div>
+
+            <div class="glass stat-card">
+              <div class="stat-top">
+                <span class="stat-label">Active Users</span>
+                <span class="stat-icon users">👤</span>
+              </div>
+              <p class="stat-value" id="activeUsersValue">--</p>
+              <p class="stat-change up" id="usersChange">Loading…</p>
+            </div>
+
+            <div class="glass stat-card">
+              <div class="stat-top">
+                <span class="stat-label">Conversion Rate</span>
+                <span class="stat-icon convert">🎯</span>
+              </div>
+              <p class="stat-value" id="conversionValue">--</p>
+              <p class="stat-change down" id="conversionChange">Loading…</p>
+            </div>
+
+            <div class="glass stat-card">
+              <div class="stat-top">
+                <span class="stat-label">Avg. Session</span>
+                <span class="stat-icon session">⏱️</span>
+              </div>
+              <p class="stat-value" id="sessionValue">--</p>
+              <p class="stat-change up" id="sessionChange">Loading…</p>
+            </div>
+          </section>
+
+          <section class="dashboard-grid">
+            <article class="glass panel panel-chart">
+              <div class="panel-header">
+                <h2>Traffic Overview</h2>
+                <div class="chip-group" role="tablist" aria-label="Date range">
+                  <button class="chip active" data-range="week" type="button">Week</button>
+                  <button class="chip" data-range="month" type="button">Month</button>
+                  <button class="chip" data-range="year" type="button">Year</button>
+                </div>
+              </div>
+              <div class="chart-container"><canvas id="mainChart"></canvas></div>
+            </article>
+
+            <article class="glass panel panel-donut">
+              <div class="panel-header">
+                <h2>Traffic Sources</h2>
+              </div>
+              <div class="chart-container donut-container"><canvas id="donutChart"></canvas></div>
+              <ul class="legend-list" id="sourceLegend"></ul>
+            </article>
+
+            <article class="glass panel panel-activity">
+              <div class="panel-header">
+                <h2>Recent Activity</h2>
+                <button type="button" class="link-btn" id="viewAllBtn">View all</button>
+              </div>
+              <ul class="activity-list" id="activityList"></ul>
+            </article>
+
+            <article class="glass panel panel-table">
+              <div class="panel-header">
+                <h2>Performance Table</h2>
+                <span class="status-pill">Live</span>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Account</th>
+                      <th>Region</th>
+                      <th>Status</th>
+                      <th>MRR</th>
+                      <th>Trend</th>
+                    </tr>
+                  </thead>
+                  <tbody id="performanceTableBody"></tbody>
+                </table>
+              </div>
+            </article>
+          </section>
+        </section>
+
+        <section class="view-section" id="analyticsView">
+          <div class="feature-grid">
+            <article class="glass panel feature-card">
+              <div class="panel-header">
+                <h2>Channel efficiency</h2>
+                <span class="status-pill">Updated</span>
+              </div>
+              <div class="metric-list" id="analyticsMetrics"></div>
+            </article>
+            <article class="glass panel feature-card">
+              <div class="panel-header">
+                <h2>Campaign momentum</h2>
+                <span class="status-pill">Live</span>
+              </div>
+              <ul class="list-stack" id="campaignList"></ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="view-section" id="audienceView">
+          <div class="feature-grid">
+            <article class="glass panel feature-card">
+              <div class="panel-header">
+                <h2>Audience segments</h2>
+                <span class="status-pill">Growing</span>
+              </div>
+              <div class="metric-list" id="audienceMetrics"></div>
+            </article>
+            <article class="glass panel feature-card">
+              <div class="panel-header">
+                <h2>Segment health</h2>
+              </div>
+              <ul class="list-stack" id="segmentList"></ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="view-section" id="revenueView">
+          <div class="feature-grid">
+            <article class="glass panel feature-card">
+              <div class="panel-header">
+                <h2>Revenue outlook</h2>
+                <span class="status-pill">Forecast</span>
+              </div>
+              <div class="metric-list" id="revenueMetrics"></div>
+            </article>
+            <article class="glass panel feature-card">
+              <div class="panel-header">
+                <h2>Pipeline activity</h2>
+              </div>
+              <ul class="list-stack" id="revenueList"></ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="view-section" id="reportsView">
+          <div class="feature-grid">
+            <article class="glass panel feature-card">
+              <div class="panel-header">
+                <h2>Report queue</h2>
+                <button type="button" class="link-btn" id="reportQuickAdd">New report</button>
+              </div>
+              <ul class="list-stack" id="reportsList"></ul>
+            </article>
+            <article class="glass panel feature-card">
+              <div class="panel-header">
+                <h2>Create a report</h2>
+              </div>
+              <form id="reportComposer" class="modal-form">
+                <label>
+                  Report name
+                  <input name="name" required value="Executive recap" />
+                </label>
+                <label>
+                  Audience
+                  <select name="audience">
+                    <option>Executive team</option>
+                    <option>Marketing</option>
+                    <option>Product</option>
+                  </select>
+                </label>
+                <label>
+                  Delivery cadence
+                  <input name="cadence" value="Weekly" />
+                </label>
+                <button type="submit" class="primary-btn">Save report</button>
+              </form>
+            </article>
+          </div>
+        </section>
+
+        <section class="view-section" id="settingsView">
+          <div class="feature-grid">
+            <article class="glass panel feature-card">
+              <div class="panel-header">
+                <h2>Workspace preferences</h2>
+              </div>
+              <div class="toggle-stack">
+                <label class="toggle-row">
+                  <span>Auto-refresh dashboard</span>
+                  <input type="checkbox" id="settingsAutoRefresh" checked />
+                </label>
+                <label class="toggle-row">
+                  <span>Alert digests</span>
+                  <input type="checkbox" id="settingsAlerts" checked />
+                </label>
+              </div>
+              <label class="select-row">
+                <span>Export format</span>
+                <select id="settingsExport">
+                  <option value="csv">CSV</option>
+                  <option value="pdf">PDF</option>
+                  <option value="ppt">PowerPoint</option>
+                </select>
+              </label>
+              <button type="button" class="primary-btn" id="saveSettingsBtn">Save preferences</button>
+            </article>
+            <article class="glass panel feature-card">
+              <div class="panel-header">
+                <h2>Operational readiness</h2>
+              </div>
+              <div class="metric-list" id="settingsSummary"></div>
+            </article>
+          </div>
+        </section>
+
+        <!-- ========== PROFILE VIEW ========== -->
+        <section class="view-section" id="profileView">
+          <div class="feature-grid">
+            <article class="glass panel feature-card">
+              <div class="panel-header">
+                <h2>Account Profile</h2>
+                <span class="status-pill" id="profileVerifiedBadge">Unverified</span>
+              </div>
+              <form id="profileForm" class="modal-form">
+                <label>
+                  Full name
+                  <input name="name" id="profileName" required />
+                </label>
+                <label>
+                  Email
+                  <input name="email" id="profileEmail" disabled style="opacity:0.6" />
+                </label>
+                <label>
+                  Job title
+                  <input name="jobTitle" id="profileJobTitle" placeholder="e.g. Product Lead" />
+                </label>
+                <label>
+                  Company
+                  <input name="company" id="profileCompany" placeholder="e.g. Acme Inc" />
+                </label>
+                <label>
+                  Avatar URL
+                  <input name="avatar" id="profileAvatar" placeholder="https://i.pravatar.cc/64?img=..." />
+                </label>
+                <button type="submit" class="primary-btn">Save changes</button>
+              </form>
+            </article>
+            <article class="glass panel feature-card">
+              <div class="panel-header">
+                <h2>Security</h2>
+              </div>
+              <form id="passwordForm" class="modal-form">
+                <label>
+                  Current password
+                  <input name="currentPassword" type="password" required minlength="8" />
+                </label>
+                <label>
+                  New password
+                  <input name="newPassword" type="password" required minlength="8" />
+                </label>
+                <button type="submit" class="primary-btn">Change password</button>
+              </form>
+              <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--glass-border)">
+                <button type="button" class="primary-btn" id="deleteAccountBtn" style="background:var(--accent-3)">Delete account</button>
+              </div>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+ </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <div id="modalRoot" class="modal-root" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header">
+        <h3 id="modalTitle">Create report</h3>
+        <button type="button" class="icon-btn modal-close" id="modalClose" aria-label="Close dialog">✕</button>
+      </div>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/socket.io@4.8.1/client-dist/socket.io.min.js"></script>
+  <script src="/dashboard.js"></script>
+</body>
+</html>
+
+
+
