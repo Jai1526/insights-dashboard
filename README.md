@@ -23,7 +23,14 @@
 
 <br/>
 
-## 🎬 Live Demo
+## 🎬 Live Demo 
+The full real-time demo requires a running backend with MongoDB. To run it locally:
+
+1. Clone the repo
+2. `npm install && npm run dev`
+3. Open `http://localhost:5000`
+4. Login with `demo@insights.io` / `demo12345`
+
 
 The live demo runs locally at `http://localhost:5000` after starting the backend server with MongoDB.
 
