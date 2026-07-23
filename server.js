@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import helmet from 'helmet';
-import rateLimit from 'express-rate-limit';
 import mongoSanitize from './middleware/mongoSanitize.js';
 import compression from 'compression';
 import morgan from 'morgan';
@@ -17,11 +16,17 @@ import globalErrorHandler from './middleware/errorHandler.js';
 import AppError from './utils/appError.js';
 import { initSocketIO } from './services/socketService.js';
 import { startTrafficGenerator } from './services/trafficGenerator.js';
+import logger from './utils/logger.js';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerDefinition } from './swaggerDefs.js';
+import swaggerJSDoc from 'swagger-jsdoc';
+import { authLimiter, analyticsLimiter, writeLimiter } from './middleware/rateLimiter.js';
 
 // Handle uncaught exceptions
 process.on('uncaughtException', (err) => {
-  console.error('UNCAUGHT EXCEPTION! 💥 Shutting down...');
-  console.error(err.name, err.message, err.stack);
+  logger.error('UNCAUGHT EXCEPTION! Shutting down...');
+  logger.error(`${err.name}: ${err.message}`);
+  logger.error(err.stack);
   if (server) {
     server.close(() => {
       mongoose.connection.close(false).then(() => process.exit(1));
@@ -33,8 +38,9 @@ process.on('uncaughtException', (err) => {
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err) => {
-  console.error('UNHANDLED REJECTION! 💥 Shutting down...');
-  console.error(err.name, err.message, err.stack);
+  logger.error('UNHANDLED REJECTION! Shutting down...');
+  logger.error(`${err.name}: ${err.message}`);
+  logger.error(err.stack);
   if (server) {
     server.close(() => process.exit(1));
   } else {
@@ -68,13 +74,11 @@ app.use(
   })
 );
 
-// 2. Rate limiting to prevent brute-force and DDoS attacks
-const limiter = rateLimit({
-  max: 100, // limit each IP to 100 requests per windowMs
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  message: { error: 'Too many requests from this IP, please try again in 15 minutes!' },
-});
-app.use('/api', limiter);
+// 2. Per-endpoint rate limiting
+// Auth endpoints: stricter (10 req/15min)
+// Analytics read: generous (200 req/15min)
+// Write endpoints: moderate (50 req/15min)
+// Derived routes inherit parent limit if not overridden
 
 // 3. CORS configuration
 app.use(
@@ -86,7 +90,7 @@ app.use(
   })
 );
 
-// 4. Request logging (Morgan)
+// 4. Request logging (Morgan) + Winston
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 } else {
@@ -116,8 +120,17 @@ app.get('/health', (_req, res) => {
   res.status(200).json({ status: 'ok', env: process.env.NODE_ENV });
 });
 
-app.use('/api/auth', authRouter);
-app.use('/api/analytics', analyticsRouter);
+// Per-endpoint rate limiting
+app.use('/api/auth', authLimiter, authRouter);
+app.use('/api/analytics', analyticsLimiter, analyticsRouter);
+
+// ── SWAGGER / OpenAPI docs ──
+const swaggerOptions = {
+  definition: swaggerDefinition,
+  apis: ['./routes/*.js', './controllers/*.js'], // scan route/controller files for JSDoc comments
+};
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Handle unhandled routes
 app.use((req, _res, next) => {
@@ -137,7 +150,7 @@ async function startServer() {
   await ensureSeedData();
 
   server = app.listen(port, () => {
-    console.log(`Insights API listening on port ${port} in ${process.env.NODE_ENV || 'development'} mode`);
+    logger.info(`Insights API listening on port ${port} in ${process.env.NODE_ENV || 'development'} mode`);
 
     // Initialize Socket.IO for real-time communication
     initSocketIO(server);
@@ -148,16 +161,16 @@ async function startServer() {
 }
 
 startServer().catch((error) => {
-  console.error(`Server failed: ${error.message}`);
+  logger.error(`Server failed: ${error.message}`);
 });
 
 
 // Handle SIGTERM and SIGINT signals for graceful shutdown
 process.on('SIGTERM', () => {
-  console.log('👋 SIGTERM RECEIVED. Shutting down gracefully...');
+  logger.info('SIGTERM RECEIVED. Shutting down gracefully...');
   if (server) {
     server.close(() => {
-      console.log('💥 Process terminated!');
+      logger.info('Process terminated!');
       mongoose.connection.close(false, () => {
         process.exit(0);
       });
@@ -168,7 +181,7 @@ process.on('SIGTERM', () => {
 });
 
 process.on('SIGINT', () => {
-  console.log('👋 SIGINT RECEIVED. Shutting down gracefully...');
+  logger.info('SIGINT RECEIVED. Shutting down gracefully...');
   if (server) {
     server.close(() => {
       mongoose.connection.close(false, () => {
